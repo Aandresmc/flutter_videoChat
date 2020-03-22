@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './src/pages/index.dart';
+import 'package:videollamada/src/pages/call_coach/call_coach.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: IndexPage(),
+      home: CoachCallPage(),
     );
   }
 }

@@ -27,6 +27,7 @@ dependencies:
   animate_do: ^1.2.1
   agora_rtc_engine: any
   permission_handler: any
+  web_socket_channel: any
 
 dev_dependencies:
   flutter_test:

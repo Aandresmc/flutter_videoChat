@@ -1,25 +1,16 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import './call.dart';
+import 'package:videollamada/src/pages/call_coach/ui/videocall.dart';
 
-class IndexPage extends StatefulWidget {
+class CoachCallPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => IndexState();
+  State<StatefulWidget> createState() => CoachCallState();
 }
 
-class IndexState extends State<IndexPage> {
-  /// create a channelController to retrieve text value
-  final _UserController = TextEditingController();
-
-  /// if channel textField is validated to have error
-  bool _validateError = false;
-
+class CoachCallState extends State<CoachCallPage> {
   @override
   void dispose() {
-    // dispose input controller
-    _UserController.dispose();
     super.dispose();
   }
 
@@ -59,7 +50,7 @@ class IndexState extends State<IndexPage> {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CallPage(),
+        builder: (context) => VideoCallPage(),
       ),
     );
   }
