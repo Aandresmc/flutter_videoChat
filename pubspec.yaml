@@ -27,11 +27,16 @@ dependencies:
   animate_do: ^1.2.1
   agora_rtc_engine: any
   permission_handler: any
-  web_socket_channel: any
+  socket_io_client : any
+  mobx: any
+  flutter_mobx: any
+  get_it: any
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^1.8.0
+  mobx_codegen: ^1.0.2
 
 
 # For information on the generic Dart part of this file, see the

@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:videollamada/di.dart' as di;
 import 'package:videollamada/src/pages/call_coach/ui/chat.dart';
-import 'package:videollamada/src/pages/call_coach/widgets/toolbar_videochat.dart';
-import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-
+import 'package:videollamada/src/pages/call_coach/widgets/toolbar_videochat.dart';
 import 'package:videollamada/src/utils/settings.dart';
 import 'package:videollamada/src/models/User.model.dart';
 
@@ -17,8 +15,6 @@ class VideoCallPage extends StatefulWidget {
 
 class _VideoCallPageState extends State<VideoCallPage>
     with SingleTickerProviderStateMixin {
-  final WebSocketChannel _channel =
-      IOWebSocketChannel.connect('ws://192.168.1.67:8080');
   AnimationController _animateController;
   List<UserAgora> _users = [];
   final List<Map<String, dynamic>> _infoChat = [];
@@ -26,6 +22,7 @@ class _VideoCallPageState extends State<VideoCallPage>
   bool muted = false;
   bool _showToolbar = true;
   bool _primaryVideo = false;
+  dynamic _chatStore;
 
   @override
   void dispose() {
@@ -41,13 +38,14 @@ class _VideoCallPageState extends State<VideoCallPage>
   void initState() {
     super.initState();
 
+    di.init();
+     _chatStore = di.chatStore;
+    _chatStore.joinChat();
     _animateController = AnimationController(
       vsync: this,
       duration: Duration(seconds: 1),
     );
     _animateController.addListener(() => this.setState(() {}));
-
-    // initialize agora sdk
     initialize();
   }
 
@@ -153,7 +151,7 @@ class _VideoCallPageState extends State<VideoCallPage>
               actions: [
                 Builder(
                   builder: (context) => Pulse(
-                    infinite: _users.isNotEmpty,
+                    infinite: _chatStore.newMessage,
                     child: IconButton(
                       icon: Stack(
                         children: <Widget>[
@@ -163,7 +161,7 @@ class _VideoCallPageState extends State<VideoCallPage>
                             right: -1.0,
                             child: Stack(
                               children: <Widget>[
-                                _users.isNotEmpty
+                                _chatStore.newMessage
                                     ? Icon(Icons.brightness_1,
                                         size: 12.0,
                                         color: Colors.purpleAccent.shade400)
@@ -184,9 +182,8 @@ class _VideoCallPageState extends State<VideoCallPage>
           : null,
       backgroundColor: Colors.black,
       endDrawer: Drawer(
-          child: ChatCoach(
-        channel: _channel,
-      )),
+        child: ChatCoach(),
+      ),
       body: FadeIn(
         manualTrigger: !_showToolbar,
         controller: (controller) => _animateController = controller,

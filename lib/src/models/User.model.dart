@@ -1,15 +1,20 @@
 class UserChat {
   final String userName;
-  String message;
+  final String message;
 
   UserChat({this.userName, this.message});
 
   factory UserChat.fromJson(Map<String, dynamic> json) {
     return UserChat(
-      userName: json['userName'],
-      message: json['message'],
+      userName: json['userName'] as String,
+      message: json['message'] as String,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'userName': userName,
+        'message': message,
+      };
 }
 
 class UserAgora {
@@ -20,8 +25,8 @@ class UserAgora {
 
   factory UserAgora.fromJson(Map<String, dynamic> json) {
     return UserAgora(
-      id: json['id'],
-      userName: json['userName'],
+      id: json['id'] as int,
+      userName: json['userName'] as String,
     );
   }
 }
